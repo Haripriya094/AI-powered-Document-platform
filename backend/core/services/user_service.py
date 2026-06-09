@@ -19,3 +19,14 @@ def login(input_data:schemas.user_login):
     except Exception as error:
         print(error)
         return final_json
+
+@user_router.post(APIS.logout, tags=["user_management"])
+def logout(input_data: schemas.user_logout):
+    final_json = {"status": "failed", "message": "logout failed"}
+    try:
+        if input_data:
+            final_json = {"status": "success", "message": "logout success"}
+            return final_json
+    except Exception as error:
+        print(error)
+        return final_json
