@@ -8,3 +8,10 @@ class user_login(BaseModel):
 
 class user_logout(BaseModel):
     username: str
+
+
+class user_register(BaseModel):
+    username: str
+    password: str
+    department: str
+    salary: int
