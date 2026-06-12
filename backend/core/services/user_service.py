@@ -30,3 +30,18 @@ def logout(input_data: schemas.user_logout):
     except Exception as error:
         print(error)
         return final_json
+
+
+@user_router.post(APIS.register, tags=["user_management"])
+def register(input_data: schemas.user_register):
+    final_json = {"status": "failed", "message": "registration failed"}
+    try:
+        if input_data:
+            res = user_handler.register(input_data)
+            if res:
+                final_json = {"status": "success", "message": "registration success"}
+                return final_json
+            return final_json
+    except Exception as error:
+        print(error)
+        return final_json
