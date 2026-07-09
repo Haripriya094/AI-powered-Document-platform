@@ -62,10 +62,11 @@ class userManagement:
                 new_user_id = "user_100"
 
 
-            res = userInfo(
+           res = userInfo(
                 user_id=new_user_id,
                 username=input_data.username,
                 email=input_data.email,
+                password=input_data.password,
                 last_login=datetime.now(),
             )
             res_json = json.loads(res.model_dump_json())
