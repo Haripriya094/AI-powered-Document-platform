@@ -118,7 +118,7 @@ def show_dashboard():
             st.warning("Upload both Resume and Job Description PDFs.")
         else:
             with st.spinner("Analyzing..."):
-                resp = api_analyze(resume_file, jd_file)
+                resp = api_analyze(resume_file, jd_file,st.session_state.user_id)
                 data = resp.json()
             if data["status"] == "success":
                 st.session_state.result = data["data"]
