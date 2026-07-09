@@ -7,9 +7,9 @@ from backend.constants.app_configurations import service_host,port
 class fastAPIservice:
     @staticmethod
     def fastapi():
-        app=FastAPI(title="AI-powered document platform",
+        app=FastAPI(title="AI-powered resume Analyzer",
                 version="0.1.0",
-                description="AI powered document platform")
+                description="AI powered resume Analyzer")
         app.include_router(router)
 
         app.add_middleware(

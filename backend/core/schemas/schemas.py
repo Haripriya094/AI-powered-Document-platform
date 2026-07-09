@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 
 class user_login(BaseModel):
@@ -13,5 +14,11 @@ class user_logout(BaseModel):
 class user_register(BaseModel):
     username: str
     password: str
-    department: str
-    salary: int
+    email: str
+
+class userInfo(BaseModel):
+    user_id: str
+    username: str
+    password: str
+    email: str
+    last_login:datetime

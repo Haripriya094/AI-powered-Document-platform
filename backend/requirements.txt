@@ -3,3 +3,7 @@ python-dotenv
 redis
 uvicorn
 pymongo
+datetime
+google-genai
+pymupdf
+openai
