@@ -1,3 +1,4 @@
+
 from backend.core.db.mongo import user_collection
 from backend.utills.logger_utill import logger
 from backend.core.schemas.schemas import userInfo
@@ -59,10 +60,11 @@ class userManagement:
                 new_user_id = "user_" + str(int(last_user_id.split("_")[-1]) + 1)
             else:
                 new_user_id = "user_100"
+
+
             res = userInfo(
                 user_id=new_user_id,
                 username=input_data.username,
-                password=input_data.password,
                 email=input_data.email,
                 last_login=datetime.now(),
             )
