@@ -7,3 +7,5 @@ datetime
 google-genai
 pymupdf
 openai
+python-jose[cryptography]
+passlib

@@ -16,9 +16,20 @@ class user_register(BaseModel):
     password: str
     email: str
 
+
 class userInfo(BaseModel):
     user_id: str
     username: str
     password: str
     email: str
-    last_login:datetime
+    last_login: datetime
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+
+
+class RefreshTokenRequest(BaseModel):
+    refresh_token: str

@@ -1,7 +1,8 @@
-
 from backend.core.db.mongo import user_collection
 from backend.utills.logger_utill import logger
-from backend.core.schemas.schemas import userInfo
+from backend.core.schemas.schemas import userInfo, TokenResponse
+from backend.utils.security.password_util import hash_password, verify_password
+from backend.utils.security.jwt_util import create_access_token, create_refresh_token
 from datetime import datetime
 import json
 
@@ -11,13 +12,6 @@ class userManagement:
         self.user_collection = user_collection.UserCollection()
 
     def login(self, input_data):
-        """
-        definition of login function
-        Args:
-            input_data
-
-        returns:
-        """
         final_json = {"status": "failed", "message": "login failed", "data": {}}
         try:
             name = input_data.username
@@ -26,32 +20,25 @@ class userManagement:
             logger.info(f"Existing User: {existing_user}")
             if not existing_user:
                 return "user not found"
-            else:
-                logger.info("Existing user found")
-                self.user_collection.update_one(
-                    {"username": name},
-                    {"last_login": datetime.now().isoformat()}
-                )
+            if not verify_password(input_data.password, existing_user.get("password", "")):
+                return "invalid credentials"
+            self.user_collection.update_one(
+                {"username": name},
+                {"last_login": datetime.now().isoformat()}
+            )
+            user_id = existing_user.get("user_id")
+            token_response = TokenResponse(
+                access_token=create_access_token(user_id),
+                refresh_token=create_refresh_token(user_id),
+            )
             final_json["status"] = "success"
             final_json["message"] = "login success"
-            final_json["data"] = {
-                "user_id": existing_user.get("user_id"),
-                "username": existing_user.get("username")
-            }
-
-        except Exception as e:
+            final_json["data"] = token_response.model_dump()
+        except Exception:
             logger.exception("Failed to log in")
         return final_json
 
     def create_user_account(self, input_data):
-        """
-        definition creating the new user
-        Args:
-            input_data
-
-        Returns:
-
-        """
         try:
             logger.info("user auto create for sso")
             if get_user_id := list(
@@ -61,12 +48,11 @@ class userManagement:
             else:
                 new_user_id = "user_100"
 
-
-           res = userInfo(
+            res = userInfo(
                 user_id=new_user_id,
                 username=input_data.username,
                 email=input_data.email,
-                password=input_data.password,
+                password=hash_password(input_data.password),
                 last_login=datetime.now(),
             )
             res_json = json.loads(res.model_dump_json())
