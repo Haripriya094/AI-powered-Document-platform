@@ -3,6 +3,7 @@ class APIS:
 
     login = "/login"
     logout = "/logout"
+    register="/register"
 
 
 class mongo_collection:
