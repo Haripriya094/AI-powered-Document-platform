@@ -1,10 +1,12 @@
 import os
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 mongo_url = os.getenv('MONGO_URL')
 mongo_db = os.getenv('MONGO_DB')
+postgres_dsn = os.getenv('POSTGRES_DSN')
 service_host = os.getenv('SERVICE_HOST')
 port = os.getenv('PORT')
 jwt_secret = os.getenv('JWT_SECRET')
@@ -19,6 +21,7 @@ secrets = {
     "FILE-BACKUP-COUNT": "5",
     "LOG-LEVEL": "DEBUG",
 }
+
 
 class LOG:
     MODULE = secrets["MODULE"]

@@ -9,3 +9,4 @@ pymupdf
 openai
 python-jose[cryptography]
 passlib
+psycopg[binary,pool]
